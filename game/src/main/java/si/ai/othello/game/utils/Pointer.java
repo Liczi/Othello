@@ -1,5 +1,6 @@
 package si.ai.othello.game.utils;
 
+import si.ai.othello.game.Board;
 import si.ai.othello.game.Game;
 
 /**
@@ -22,9 +23,9 @@ public class Pointer {
     }
 
     public static Pointer of(int colIndex, int rowIndex) {
-        if (colIndex > Game.BOARD_SIZE - 1 ||
+        if (colIndex > Board.BOARD_SIZE - 1 ||
                 colIndex < 0 ||
-                rowIndex > Game.BOARD_SIZE - 1 ||
+                rowIndex > Board.BOARD_SIZE - 1 ||
                 rowIndex < 0) {
             return null;
         }

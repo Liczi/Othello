@@ -1,10 +1,10 @@
-package si.ai.othello.game;
+package si.ai.othello.game.player;
 
 /**
  * @author Jakub Licznerski
  *         Created on 10.05.2017.
  */
-interface Player {
+public interface Player {
 
     String getName();
     boolean getColor();
