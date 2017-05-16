@@ -1,7 +1,10 @@
 package si.ai.othello.web;
 
+import si.ai.othello.game.utils.Pointer;
 import spark.Spark;
 
+import static si.ai.othello.web.util.JsonUtil.json;
+import static spark.Spark.after;
 import static spark.Spark.get;
 
 /**
@@ -11,12 +14,13 @@ import static spark.Spark.get;
 public class Application {
     public static void main(String[] args) {
 
-
+        after((req, res) -> {
+            res.type("application/json");
+        });
         Spark.staticFileLocation("/public");
 
 
-
-
-        get("/hello_world", (req, res) -> "Hello World");
+        final Boolean[] tab = {true, false};
+        get("/pointer", (req, res) -> new TestToJson(1, "string", true, tab), json());
     }
 }
