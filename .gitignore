@@ -47,3 +47,27 @@ gradle-app.setting
 
 /game/build/
 /web/build/
+
+### Angular 4
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/web/src/main/resources/components/dist
+/web/src/main/resources/components/tmp
+/web/src/main/resources/components/out-tsc
+
+# dependencies
+/web/src/main/resources/components/node_modules/
+
+# misc
+/web/src/main/resources/components/.sass-cache
+/web/src/main/resources/components/connect.lock
+/web/src/main/resources/components/coverage
+/web/src/main/resources/components/libpeerconnection.log
+/web/src/main/resources/components/npm-debug.log
+/web/src/main/resources/components/testem.log
+/web/src/main/resources/components/typings
+
+# e2e
+/web/src/main/resources/components/e2e/*.js
+/web/src/main/resources/components/e2e/*.map
