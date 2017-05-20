@@ -1,0 +1,14 @@
+.board-wrapper {
+    padding: 36px;
+    /*height: 100%;*/
+}
+
+.board-row {
+    height: 66px;
+}
+
+.board-item {
+    float: left;
+    height: 66px;
+    width: 66px;
+}

@@ -1,0 +1,5 @@
+<div class="board-wrapper">
+    <div *ngFor="let row of board" class="board-row">
+        <div *ngFor="let item of row" class="board-item"> <app-cone [value]="item"></app-cone></div>
+    </div>
+</div>

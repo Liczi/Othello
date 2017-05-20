@@ -1,9 +1,11 @@
 package si.ai.othello.web;
 
 import com.google.gson.Gson;
+import si.ai.othello.game.Board;
 import spark.Spark;
 
 import static si.ai.othello.web.util.JsonUtil.json;
+import static si.ai.othello.web.util.JsonUtil.toJson;
 import static spark.Spark.*;
 
 /**
@@ -15,15 +17,17 @@ public class Application {
 //        Spark.staticFileLocation("/components/src");
 
         enableCORS("http://localhost:4200", "ALL", "ALL");
-        after((req, res) -> {
-            res.type("application/json");
-        });
+//        after((req, res) -> {
+//            res.type("application/json");
+//        });
 
 
 
         final Boolean[] tab = {true, false};
-        get("/test", (req, res) -> new TestToJson(1, "string", true, tab), json());
-        get("/title", (req, res) -> new Gson().toJson("Reversi"));
+//        get("/test", (req, res) -> new TestToJson(1, "string", true, tab), json());
+        //todo extract to Board package and BoardController class
+        get("/board", (req, res) -> new Boolean[8][8], json());
+        get("/title", (req, res) -> "Reversi", json());
     }
 
     private static void enableCORS(final String origin, final String methods, final String headers) {
