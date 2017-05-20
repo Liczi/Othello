@@ -1,0 +1,23 @@
+.board {
+    height: 600px; /* 766x766 px original */
+    width: 600px;
+    background-image: url('../assets/img/board.png');
+    background-size: 100%;
+}
+
+.wrapper {
+    height: 100%;
+}
+
+.top-spacer {
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.centered_box {
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -8,6 +8,8 @@ import {ApiService} from './api/api.service';
 })
 export class AppComponent {
     title = 'app works!';
+    testData;
+    //todo test boolean[][] table
 
     constructor(private apiService: ApiService) {
     }
@@ -22,4 +24,6 @@ export class AppComponent {
                 console.log(err)
             });
     }
+
+
 }

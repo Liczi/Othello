@@ -19,8 +19,8 @@ export class ApiService {
             //.catch((error: any) => Observable.throw(error.json().error || 'Unknown server error'));
     };
 
-    getTestData(): Observable<Test> {
-        return this.http.get(AppSettings.API_ENDPOINT + "test")
+    getBoard(): Observable<Boolean[][]> {
+        return this.http.get(AppSettings.API_ENDPOINT + "board")
             .map(res => res.json());
             //.catch((error: any) => Observable.throw(error.json().error || 'Unknown server error'));
     };
