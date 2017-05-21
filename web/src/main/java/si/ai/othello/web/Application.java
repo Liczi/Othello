@@ -1,11 +1,14 @@
 package si.ai.othello.web;
 
-import com.google.gson.Gson;
-import si.ai.othello.game.Board;
-import spark.Spark;
+import si.ai.othello.game.Game;
+import si.ai.othello.web.board.BoardController;
+import si.ai.othello.web.board.BoardService;
+import si.ai.othello.web.board.MockBoardService;
+import si.ai.othello.web.game.GameController;
+import si.ai.othello.web.game.GameService;
+import si.ai.othello.web.game.MockGameService;
 
 import static si.ai.othello.web.util.JsonUtil.json;
-import static si.ai.othello.web.util.JsonUtil.toJson;
 import static spark.Spark.*;
 
 /**
@@ -13,21 +16,25 @@ import static spark.Spark.*;
  *         Created on 06.05.2017.
  */
 public class Application {
+
+    public static BoardService BOARD_SERVICE;
+    public static GameService GAME_SERVICE;
+
     public static void main(String[] args) {
-//        Spark.staticFileLocation("/components/src");
+        initializeServices();
 
         enableCORS("http://localhost:4200", "ALL", "ALL");
-//        after((req, res) -> {
-//            res.type("application/json");
-//        });
-
-
 
         final Boolean[] tab = {true, false};
 //        get("/test", (req, res) -> new TestToJson(1, "string", true, tab), json());
-        //todo extract to Board package and BoardController class
-        get("/board", (req, res) -> new Boolean[8][8], json());
+        get("/board", BoardController.getBoard(), json());
+        get("/game", GameController.getGameState(), json());
         get("/title", (req, res) -> "Reversi", json());
+    }
+
+    private static void initializeServices() {
+        BOARD_SERVICE = new MockBoardService();
+        GAME_SERVICE = new MockGameService();
     }
 
     private static void enableCORS(final String origin, final String methods, final String headers) {

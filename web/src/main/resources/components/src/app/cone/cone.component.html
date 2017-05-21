@@ -1,1 +1,6 @@
-{{ value }}
+<div [ngSwitch]="currentColor" class="full-height border-box small-padding">
+    <div *ngSwitchCase="false" class="black-cone full-height">{{currentColor}} {{col}} {{row}}</div>
+    <div *ngSwitchCase="true" class="white-cone full-height">{{currentColor}} {{col}} {{row}}</div>
+    <div *ngSwitchDefault>{{currentColor}} {{col}} {{row}}</div>
+
+</div>

@@ -5,7 +5,7 @@ import {Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {AppSettings} from "../app.settings";
-import {Test} from "../../test/test";
+import {GameState} from "../util/GameState";
 
 @Injectable()
 export class ApiService {
@@ -24,5 +24,11 @@ export class ApiService {
             .map(res => res.json());
             //.catch((error: any) => Observable.throw(error.json().error || 'Unknown server error'));
     };
+
+    getGameState(): Observable<GameState> {
+        return this.http.get(AppSettings.API_ENDPOINT + "game")
+            .map(res => res.json());
+        //.catch((error: any) => Observable.throw(error.json().error || 'Unknown server error'));
+    }
 
 }

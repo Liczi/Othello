@@ -9,7 +9,8 @@ import si.ai.othello.game.player.Player;
  *         Created on 10.05.2017.
  */
 public class Game {
-
+    public static final boolean WHITE = true;
+    public static final boolean BLACK = false;
 
     private Player white;
     private Player black;
@@ -56,10 +57,14 @@ public class Game {
     }
 
     /**
-     * @return 0 if current is white, 1 if its black
+     * @return 0 if current is black, 1 if its white
      */
     public boolean getCurrentColor() {
-        return currentPlayer != white;
+        return currentPlayer == white;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     private void setCurrentAsOpponent() {

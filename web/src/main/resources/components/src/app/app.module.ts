@@ -7,12 +7,14 @@ import {AppComponent} from './app.component';
 import {ApiService} from './api/api.service';
 import {BoardComponent} from './board/board.component';
 import { ConeComponent } from './cone/cone.component';
+import { AvailableMoveDirective } from './directives/available-move.directive';
 
 @NgModule({
     declarations: [
         AppComponent,
         BoardComponent,
         ConeComponent,
+        AvailableMoveDirective,
     ],
     imports: [
         BrowserModule,
