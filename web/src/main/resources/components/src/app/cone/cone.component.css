@@ -1,0 +1,19 @@
+.border-box {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.small-padding {
+    padding: 5%;
+}
+
+.black-cone {
+    background-image: url('../../assets/img/black_cone.png');
+    background-size: 100%;
+}
+
+.white-cone {
+    background-image: url('../../assets/img/white_cone.png');
+    background-size: 100%;
+}

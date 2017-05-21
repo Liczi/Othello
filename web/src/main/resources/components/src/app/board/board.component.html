@@ -1,5 +1,15 @@
 <div class="board-wrapper">
-    <div *ngFor="let row of board" class="board-row">
-        <div *ngFor="let item of row" class="board-item"> <app-cone [value]="item"></app-cone></div>
+    <div *ngFor="let row of board; let rowIndex=index" class="board-row">
+        <div *ngFor="let item of row; let colIndex = index" class="board-item">
+            <app-cone *ngIf="!isAvailableMove(colIndex, rowIndex); else available"
+                      [currentColor]="item" [col]="colIndex" [row]="rowIndex"></app-cone>
+
+            <ng-template #available>
+                <div class="full-height" available-move>
+                    <app-cone [currentColor]="item" [col]="colIndex" [row]="rowIndex"></app-cone>
+                </div>
+            </ng-template>
+
+        </div>
     </div>
 </div>

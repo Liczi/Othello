@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../api/api.service";
+import {Pointer} from "../util/Pointer";
+import {Player} from "../util/Player";
 
 @Component({
     selector: 'app-board',
@@ -9,24 +11,26 @@ import {ApiService} from "../api/api.service";
 export class BoardComponent implements OnInit {
 
     board: Boolean[][];
-    table;
+    availableMoves: Pointer[];
+    currentPlayer: Player;
 
     constructor(private apiService: ApiService) {
     }
 
     ngOnInit() {
-        this.table = [
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            [1, 2, 3, 4, 5, 6, 7, 8]
-        ];
+        // this.loadBoard();
+        this.loadGameState();
+    }
 
-        this.loadBoard();
+    loadGameState() {
+        this.apiService.getGameState()
+            .subscribe(state => {
+                this.board = state.board;
+                this.availableMoves = state.moves;
+                this.currentPlayer = state.player;
+            }, err => {
+                console.log(err)
+            });
     }
 
     loadBoard() {
@@ -36,4 +40,17 @@ export class BoardComponent implements OnInit {
             });
     }
 
+    rowCustomTrack(index: number, obj: any) {
+        return index;
+    }
+
+    isAvailableMove(col: number, row: number) {
+        for (let i = 0, l = this.availableMoves.length; i < l; i++) {
+            let pointer = this.availableMoves[i];
+            if (pointer.colIndex === col && pointer.rowIndex === row)
+                return true;
+        }
+
+        return false;
+    }
 }

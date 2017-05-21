@@ -53,6 +53,7 @@ public class Board {
                 .toArray(Pointer[]::new);
     }
 
+    //we dont check if there is null on current position
     private boolean isValidMoveNullUnchecked(Pointer pointer) {
 
         // todo check if there will be a capture when placed at this position
