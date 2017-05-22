@@ -6,5 +6,5 @@ This repository contains two modules:
     - heuristics
  - web: game UI implementation using:
     - Spark: performant web framework using Jetty web container
-    - Velocity: templating framework for Java
-    - JavaScript and jQuery for dynamic game handling
+    - Angular 4.0
+    - TypeScript and jQuery for dynamic game handling
