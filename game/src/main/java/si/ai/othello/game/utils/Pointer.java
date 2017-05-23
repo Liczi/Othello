@@ -32,6 +32,21 @@ public class Pointer {
         return new Pointer(colIndex, rowIndex);
     }
 
+    //todo watch out as this method affects this object
+    public Pointer move(int columnsToMove, int rowsToMove) {
+        if (colIndex > Board.BOARD_SIZE - 1 ||
+                colIndex < 0 ||
+                rowIndex > Board.BOARD_SIZE - 1 ||
+                rowIndex < 0) {
+            return null;
+        }
+
+        this.colIndex += columnsToMove;
+        this.rowIndex += rowsToMove;
+
+        return this;
+    }
+
     public int getColIndex() {
         return colIndex;
     }
