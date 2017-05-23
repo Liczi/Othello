@@ -15,7 +15,7 @@ public class Game {
     private Player white;
     private Player black;
     private Display display;
-    private Board board; // todo [col][row]
+    private Board board; // [col][row]
 
     private Player currentPlayer;
 
@@ -24,8 +24,6 @@ public class Game {
         this.black = black;
         this.display = display;
         this.board = new Board(this);
-
-        //todo set currentPlayer (white/black)
     }
 
     /**
@@ -38,7 +36,7 @@ public class Game {
         currentPlayer = isWhiteStarting ? white : black;
 
         do {
-            currentPlayer.nextMove();
+            currentPlayer.nextMove(); //todo it could return null or throw exception when no moves can be done
             board.updateCones();
             display.updateBoard(board.getBoard());
         } while (setNextPlayer() != null);
@@ -46,6 +44,7 @@ public class Game {
         return currentPlayer;
     }
 
+    //todo implement EndOfGame as an application event or exception
     private Player setNextPlayer() {
         //change current player
         setCurrentAsOpponent();
