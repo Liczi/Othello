@@ -5,6 +5,7 @@ import si.ai.othello.game.utils.Pointer;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -35,7 +36,6 @@ public class Board {
      * @return array of possible moves for given player color
      */
     public Pointer[] getAvailableMoves(boolean color) {
-        //todo use color !!!
         Stream.Builder<Pointer> streamBuilder = Stream.builder();
 
         //not-null stream init
@@ -43,7 +43,7 @@ public class Board {
             Boolean[] columns = board[i];
             for (int j = 0, columnsLength = columns.length; j < columnsLength; j++) {
                 //we are interested only in opposite color cones' neighbours
-                if (columns[j] == !color)
+                if (columns[j] == Boolean.valueOf(!color))
                     streamBuilder.add(new Pointer(i, j));
             }
         }
@@ -85,7 +85,9 @@ public class Board {
                             end = true;
                         else {
                             currentValue = getValueAt(current);
-                            if (currentValue == color)
+                            if (currentValue == null)
+                                end = true;
+                            else if (currentValue == Boolean.valueOf(color))
                                 return true;
                         }
                     } while (!end);
@@ -97,15 +99,18 @@ public class Board {
     private Stream<Pointer> getNeighbours(Pointer pointer, boolean isNull) {
         Stream.Builder<Pointer> builder = Stream.builder();
 
-        for (int i = -1; i < 2; i += 2) {
-            builder.add(Pointer.of(pointer.getColIndex() + i, pointer.getRowIndex()));
-        }
-        for (int i = -1; i < 2; i += 2) {
-            builder.add(Pointer.of(pointer.getColIndex(), pointer.getRowIndex() + i));
+        for (int i = -1; i < 2; i++) {
+            builder.add(Pointer.of(pointer.getColIndex() + i, pointer.getRowIndex() - 1));
+            builder.add(Pointer.of(pointer.getColIndex() + i, pointer.getRowIndex() + 1));
         }
 
+        builder.add(Pointer.of(pointer.getColIndex() - 1, pointer.getRowIndex()));
+        builder.add(Pointer.of(pointer.getColIndex() + 1, pointer.getRowIndex()));
+
+
         return builder.build()
-                .filter(ptr -> getValueAt(ptr).equals(null) == isNull);
+                .filter(Objects::nonNull)
+                .filter(ptr -> (getValueAt(ptr) == null) == isNull);
     }
 
     //todo is check needed here ? for already taken position
