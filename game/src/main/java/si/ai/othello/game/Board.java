@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import static si.ai.othello.game.Game.WHITE;
+
 /**
  * @author Jakub Licznerski
  *         Created on 10.05.2017.
@@ -96,6 +98,49 @@ public class Board {
                 });
     }
 
+    /**
+     * Places the cone in given position and performs all possible captures
+     *
+     * @param pointer pointer to given cone position
+     * @param color   color of placed cone
+     */
+    public void moveAt(Pointer pointer, boolean color) {
+        //todo implement
+        setConeAt(pointer, color);
+
+        getNeighbours(pointer, false)
+                .filter(ptr -> getValueAt(ptr) != color)
+                .forEach(ptr -> {
+                    int colR = ptr.getColIndex() - pointer.getColIndex();
+                    int rowR = ptr.getRowIndex() - pointer.getRowIndex();
+
+                    Pointer current = new Pointer(pointer);
+                    Boolean currentValue;
+                    boolean end = false;
+                    do {
+                        //move
+                        current = current.move(colR, rowR);
+                        if (current == null)
+                            end = true;
+                        else {
+                            currentValue = getValueAt(current);
+                            if (currentValue == null)
+                                end = true;
+                            else if (currentValue == Boolean.valueOf(color)) {
+                                colR *= -1;
+                                rowR *= -1;
+
+                                do {
+                                    setConeAt(current, color);
+                                    current = current.move(colR, rowR);
+                                } while (!current.equals(pointer));
+                                end = true;
+                            }
+                        }
+                    } while (!end);
+                });
+    }
+
     private Stream<Pointer> getNeighbours(Pointer pointer, boolean isNull) {
         Stream.Builder<Pointer> builder = Stream.builder();
 
@@ -113,8 +158,7 @@ public class Board {
                 .filter(ptr -> (getValueAt(ptr) == null) == isNull);
     }
 
-    //todo is check needed here ? for already taken position
-    public void setConeAt(boolean color, Pointer position) {
+    void setConeAt(Pointer position, boolean color) {
         board[position.getColIndex()][position.getRowIndex()] = color;
     }
 
@@ -127,24 +171,42 @@ public class Board {
         return board;
     }
 
+    //todo is this necessary
     public void updateCones() {
-        //todo update number of current cones of each player
-        //todo is this necessary
-        throw new NotImplementedException();
+        currentBlack = currentWhite = 0;
+
+        for (Boolean[] booleans : board) {
+            for (Boolean aBoolean : booleans) {
+                if (aBoolean != null) {
+                    if (aBoolean)
+                        currentWhite++;
+                    else
+                        currentBlack++;
+                }
+            }
+        }
     }
 
+    //todo test
     public boolean isEndOfGame() {
         return currentWhite + currentBlack >= (BOARD_SIZE ^ 2) || (getAvailableMoves(game.getCurrentColor()).length <= 0);
     }
 
-    //todo test that method
     private void setInitialCones() {
         currentWhite = 2;
         currentBlack = 2;
         Pointer pointer = new Pointer(3, 3);
-        setConeAt(true, pointer);
-        setConeAt(false, pointer.move(0, 1));
-        setConeAt(true, pointer.move(1, 0));
-        setConeAt(false, pointer.move(0, -1));
+        setConeAt(pointer, true);
+        setConeAt(pointer.move(0, 1), false);
+        setConeAt(pointer.move(1, 0), true);
+        setConeAt(pointer.move(0, -1), false);
+    }
+
+    public int getCurrentWhite() {
+        return currentWhite;
+    }
+
+    public int getCurrentBlack() {
+        return currentBlack;
     }
 }
