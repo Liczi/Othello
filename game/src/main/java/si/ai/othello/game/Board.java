@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import static si.ai.othello.game.Game.BLACK;
 import static si.ai.othello.game.Game.WHITE;
 
 /**
@@ -105,7 +106,6 @@ public class Board {
      * @param color   color of placed cone
      */
     public void moveAt(Pointer pointer, boolean color) {
-        //todo implement
         setConeAt(pointer, color);
 
         getNeighbours(pointer, false)
@@ -196,10 +196,10 @@ public class Board {
         currentWhite = 2;
         currentBlack = 2;
         Pointer pointer = new Pointer(3, 3);
-        setConeAt(pointer, true);
-        setConeAt(pointer.move(0, 1), false);
-        setConeAt(pointer.move(1, 0), true);
-        setConeAt(pointer.move(0, -1), false);
+        setConeAt(pointer, WHITE);
+        setConeAt(pointer.move(0, 1), BLACK);
+        setConeAt(pointer.move(1, 0), WHITE);
+        setConeAt(pointer.move(0, -1), BLACK);
     }
 
     public int getCurrentWhite() {

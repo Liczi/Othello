@@ -9,4 +9,8 @@ export class Pointer {
         this.colIndex = col;
         this.rowIndex = row;
     }
+
+    toJson(): string {
+        return JSON.stringify(this);
+    }
 }

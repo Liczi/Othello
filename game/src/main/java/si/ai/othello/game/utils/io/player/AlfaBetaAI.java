@@ -1,10 +1,10 @@
-package si.ai.othello.game.player;
+package si.ai.othello.game.utils.io.player;
 
 /**
  * @author Jakub Licznerski
  *         Created on 11.05.2017.
  */
-public class MinMaxAi implements Player {
+public class AlfaBetaAI implements IPlayer {
     @Override
     public String getName() {
         return null;

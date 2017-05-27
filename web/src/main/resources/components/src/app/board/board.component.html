@@ -1,15 +1,9 @@
 <div class="board-wrapper">
-    <div *ngFor="let row of board; let rowIndex=index" class="board-row">
-        <div *ngFor="let item of row; let colIndex = index" class="board-item">
-            <app-cone *ngIf="!isAvailableMove(colIndex, rowIndex); else available"
-                      [currentColor]="item" [col]="colIndex" [row]="rowIndex"></app-cone>
-
-            <ng-template #available>
-                <div class="full-height" available-move>
-                    <app-cone [currentColor]="item" [col]="colIndex" [row]="rowIndex"></app-cone>
-                </div>
-            </ng-template>
-
+    <div *ngFor="let col of board; let colIndex=index" class="board-row">
+        <div *ngFor="let item of col; let rowIndex = index" class="board-item">
+            <app-cone [currentColor]="item" [col]="colIndex" [row]="rowIndex"
+                      [isAvailable]="isAvailableMove(colIndex, rowIndex)"
+                      (gameStateEvent)="gameStateChangeEvent($event)"></app-cone>
         </div>
     </div>
 </div>

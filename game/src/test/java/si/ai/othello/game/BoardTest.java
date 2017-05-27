@@ -24,7 +24,7 @@ public class BoardTest {
 
     @Before
     public void init() {
-        board = new Board(new Game(null, null, null));
+        board = new Board(new Game(null, null));
     }
 
     @Test
@@ -186,7 +186,7 @@ public class BoardTest {
 
     //Move test
     @Test
-    public void moveAtStartingTest() {
+    public void moveAtStartingBlackTest() {
         board.moveAt(new Pointer(3, 2), BLACK);
 
         List<Pointer> blacks = Stream.of(
@@ -198,6 +198,34 @@ public class BoardTest {
 
         List<Pointer> whites = Stream.of(
                 new Pointer(4, 4))
+                .collect(Collectors.toList());
+
+        assertTrue(blacks.stream()
+                .allMatch(pointer -> board.getValueAt(pointer) == BLACK)
+        );
+        assertTrue(whites.stream()
+                .allMatch(pointer -> board.getValueAt(pointer) == WHITE)
+        );
+
+        board.updateCones();
+        assertEquals(blacks.size(), board.getCurrentBlack());
+        assertEquals(whites.size(), board.getCurrentWhite());
+    }
+
+    //Move test
+    @Test
+    public void moveAtStartingWhiteTest() {
+        board.moveAt(new Pointer(4, 2), WHITE);
+
+        List<Pointer> whites = Stream.of(
+                new Pointer(4, 2),
+                new Pointer(3, 3),
+                new Pointer(4, 4),
+                new Pointer(4, 3))
+                .collect(Collectors.toList());
+
+        List<Pointer> blacks = Stream.of(
+                new Pointer(3, 4))
                 .collect(Collectors.toList());
 
         assertTrue(blacks.stream()

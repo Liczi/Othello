@@ -2,7 +2,7 @@ package si.ai.othello.game;
 
 
 import si.ai.othello.game.utils.io.Display;
-import si.ai.othello.game.player.Player;
+import si.ai.othello.game.utils.io.player.IPlayer;
 
 /**
  * @author Jakub Licznerski
@@ -12,17 +12,16 @@ public class Game {
     public static final boolean WHITE = true;
     public static final boolean BLACK = false;
 
-    private Player white;
-    private Player black;
-    private Display display;
+    private IPlayer white;
+    private IPlayer black;
     private Board board; // [col][row]
 
-    private Player currentPlayer;
+    private IPlayer currentPlayer;
 
-    public Game(Player white, Player black, Display display) {
+    public Game(IPlayer white, IPlayer black) {
         this.white = white;
         this.black = black;
-        this.display = display;
+       //this.display = display;
         this.board = new Board(this);
     }
 
@@ -32,20 +31,20 @@ public class Game {
      * @param isWhiteStarting declare if white cones are starting
      * @return the winner
      */
-    public Player startGame(boolean isWhiteStarting) {
+    public IPlayer startGame(boolean isWhiteStarting) {
         currentPlayer = isWhiteStarting ? white : black;
-
-        do {
-            currentPlayer.nextMove(); //todo it could return null or throw exception when no moves can be done
-            board.updateCones();
-            display.updateBoard(board.getBoard());
-        } while (setNextPlayer() != null);
-
         return currentPlayer;
+//        do {
+//            currentPlayer.nextMove(); //todo it could return null or throw exception when no moves can be done
+//            board.updateCones();
+//           // display.updateBoard(board.getBoard());
+//        } while (setNextPlayer() != null);
+//
+//        return currentPlayer;
     }
 
     //todo implement EndOfGame as an application event or exception
-    private Player setNextPlayer() {
+    private IPlayer setNextPlayer() {
         //change current player
         setCurrentAsOpponent();
         if (board.isEndOfGame()) {
@@ -55,6 +54,10 @@ public class Game {
             return currentPlayer;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     /**
      * @return 0 if current is black, 1 if its white
      */
@@ -62,7 +65,7 @@ public class Game {
         return currentPlayer == white;
     }
 
-    public Player getCurrentPlayer() {
+    public IPlayer getCurrentPlayer() {
         return currentPlayer;
     }
 

@@ -1,4 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ApiService} from "../api/api.service";
+import {Pointer} from "../util/Pointer";
+import {GameState} from "../util/GameState";
 
 @Component({
     selector: 'app-cone',
@@ -11,11 +14,20 @@ export class ConeComponent implements OnInit {
     @Input() currentColor: Boolean;
     @Input() col: number;
     @Input() row: number;
+    @Input() isAvailable: boolean;
+    @Output() gameStateEvent: EventEmitter<GameState> = new EventEmitter();
 
-    constructor() {
+    constructor(private api: ApiService) {
     }
 
     ngOnInit() {
     }
 
+    move() {
+        //todo emit gameState change (to board - check if update)
+        this.api.moveAt(new Pointer(this.col, this.row))
+            .subscribe(gameState => this.gameStateEvent.emit(gameState), err => {
+                console.log(err)
+            })
+    }
 }

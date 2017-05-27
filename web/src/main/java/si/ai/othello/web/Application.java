@@ -16,9 +16,10 @@ import static spark.Spark.*;
  *         Created on 06.05.2017.
  */
 public class Application {
-
     public static BoardService BOARD_SERVICE;
     public static GameService GAME_SERVICE;
+
+    public static final String ACCEPT_TYPE_JSON = "application/json";
 
     public static void main(String[] args) {
         initializeServices();
@@ -29,6 +30,9 @@ public class Application {
 //        get("/test", (req, res) -> new TestToJson(1, "string", true, tab), json());
         get("/board", BoardController.getBoard(), json());
         get("/game", GameController.getGameState(), json());
+        get("/new", ACCEPT_TYPE_JSON, GameController.newGame(), json());
+//        get("new", "application/json", (request, response) -> request.queryParams("param1"));
+        get("/move", ACCEPT_TYPE_JSON, GameController.move(), json());
         get("/title", (req, res) -> "Reversi", json());
     }
 

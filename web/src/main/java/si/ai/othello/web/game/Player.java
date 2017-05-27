@@ -2,6 +2,7 @@ package si.ai.othello.web.game;
 
 import lombok.Data;
 import lombok.NonNull;
+import si.ai.othello.game.utils.io.player.IPlayer;
 
 /**
  * @author Jakub Licznerski
@@ -12,7 +13,7 @@ public class Player {
     @NonNull private String name;
     @NonNull private boolean color;
 
-    public Player(si.ai.othello.game.player.Player player) {
+    public Player(IPlayer player) {
         this.name = player.getName();
         this.color = player.getColor();
     }
