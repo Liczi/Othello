@@ -44,7 +44,7 @@ public class Game {
     }
 
     //todo implement EndOfGame as an application event or exception
-    private IPlayer setNextPlayer() {
+    public IPlayer setNextPlayer() {
         //change current player
         setCurrentAsOpponent();
         if (board.isEndOfGame()) {

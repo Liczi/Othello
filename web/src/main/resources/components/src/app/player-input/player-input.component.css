@@ -1,0 +1,29 @@
+.top-menu {
+    padding: 15px;
+    width: 20vw;
+    margin-right: 0;
+    margin-top: 0;
+    position: fixed;
+    right: 0;
+
+    background: rgba(0,0,0,0.5);
+}
+
+.cone-icon {
+    height: 15px;
+}
+
+.input {
+    background: rgba(57, 119, 23, 0.5);
+    display: block;
+}
+
+.player-text {
+    line-height: 8vh;
+    color: white;
+}
+
+.game-button {
+    display: block;
+    margin: 15px auto 0;
+}

@@ -1,14 +1,14 @@
 <div *ngIf="isAvailable; else notAvailable" class="full-height" available-move (move)="move($event)">
     <div [ngSwitch]="currentColor" class="full-height border-box small-padding">
-        <div *ngSwitchCase="false" class="black-cone full-height">{{currentColor}} {{col}} {{row}}</div>
-        <div *ngSwitchCase="true" class="white-cone full-height">{{currentColor}} {{col}} {{row}}</div>
-        <div *ngSwitchDefault>{{currentColor}} {{col}} {{row}}</div>
+        <div *ngSwitchCase="false" class="black-cone full-height"></div>
+        <div *ngSwitchCase="true" class="white-cone full-height"></div>
+        <div *ngSwitchDefault></div>
     </div>
 </div>
 <ng-template #notAvailable>
     <div [ngSwitch]="currentColor" class="full-height border-box small-padding">
-        <div *ngSwitchCase="false" class="black-cone full-height">{{currentColor}} {{col}} {{row}}</div>
-        <div *ngSwitchCase="true" class="white-cone full-height">{{currentColor}} {{col}} {{row}}</div>
-        <div *ngSwitchDefault>{{currentColor}} {{col}} {{row}}</div>
+        <div *ngSwitchCase="false" class="black-cone full-height"></div>
+        <div *ngSwitchCase="true" class="white-cone full-height"></div>
+        <div *ngSwitchDefault></div>
     </div>
 </ng-template>

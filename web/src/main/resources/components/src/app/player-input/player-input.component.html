@@ -1,0 +1,14 @@
+<div class="top-menu">
+    <!--<div class="centered_box"-->
+    <span class="player-text">Gracz</span>
+    <img src="../../assets/img/white_cone.png" class="cone-icon" />
+    <br />
+    <input class="input" [(ngModel)]="whiteName" placeholder="Nazwa1">
+
+    <span class="player-text">Gracz</span>
+    <img src="../../assets/img/black_cone.png" class="cone-icon" />
+    <br />
+    <input class="input" [(ngModel)]="blackName" placeholder="Nazwa2">
+
+    <button (click)="startGame()" class="game-button">ROZPOCZNIJ</button>
+</div>

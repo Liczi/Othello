@@ -189,7 +189,7 @@ public class Board {
 
     //todo test
     public boolean isEndOfGame() {
-        return currentWhite + currentBlack >= (BOARD_SIZE ^ 2) || (getAvailableMoves(game.getCurrentColor()).length <= 0);
+        return currentWhite + currentBlack >= (Math.pow(BOARD_SIZE,2)) || (getAvailableMoves(game.getCurrentColor()).length <= 0);
     }
 
     private void setInitialCones() {

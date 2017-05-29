@@ -2,6 +2,8 @@ package si.ai.othello.web.game;
 
 import si.ai.othello.game.Game;
 import si.ai.othello.game.utils.Pointer;
+import si.ai.othello.game.utils.io.ConsoleDisplay;
+import si.ai.othello.game.utils.io.Display;
 import si.ai.othello.game.utils.io.player.Human;
 
 import static si.ai.othello.game.Game.WHITE;
@@ -15,9 +17,10 @@ public class MockGameService implements GameService {
 
     private Game game;
 
+    //todo check if needed
     @Override
     public GameState getGameState() {
-        return getCurrentGameState();
+        return getCurrentGameState(false);
     }
 
     @Override
@@ -30,24 +33,36 @@ public class MockGameService implements GameService {
         game.startGame(true);
 
         //white starts
-        return getCurrentGameState();
+        return getCurrentGameState(false);
     }
 
     @Override
     public GameState move(Pointer at) {
+        boolean isWinner = false;
+
         game.getBoard().moveAt(at, game.getCurrentColor());
         game.getBoard().updateCones();
+        if (game.setNextPlayer() == null) {
+            isWinner = true;
+        };
 
-        return getCurrentGameState();
+        //todo delete
+        Display display = new ConsoleDisplay();
+        display.updateBoard(game.getBoard().getBoard());
+
+        return getCurrentGameState(isWinner);
     }
 
-    private GameState getCurrentGameState() {
+    private GameState getCurrentGameState(boolean isWinner) {
         Player current = new Player(game.getCurrentPlayer());
 
         return new GameState(
                 game.getBoard().getBoard(),
                 game.getBoard().getAvailableMoves(current.isColor()),
-                current
+                current,
+                isWinner,
+                game.getBoard().getCurrentWhite(),
+                game.getBoard().getCurrentBlack()
         );
     }
 }

@@ -21,3 +21,23 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.big-cone-icon {
+    height: 45px;
+}
+
+.big-player-text {
+    font-family: Calibri;
+    font-size: 2em;
+    line-height: 2;
+}
+
+.score-text {
+    font-family: Calibri;
+    font-size: 2em;
+}
+
+.big-winner-text {
+    font-family: Calibri;
+    font-size: 5em;
+}

@@ -25,6 +25,8 @@ public class Application {
         initializeServices();
 
         enableCORS("http://localhost:4200", "ALL", "ALL");
+//        enableCORS("http://192.168.0.3:8080", "ALL", "ALL");
+//        enableCORS("*", "ALL", "ALL");
 
         final Boolean[] tab = {true, false};
 //        get("/test", (req, res) -> new TestToJson(1, "string", true, tab), json());

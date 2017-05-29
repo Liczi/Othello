@@ -5,4 +5,7 @@ export class GameState {
     board: Boolean[][];
     moves: Pointer[];
     player: Player;
+    isWinner: boolean;
+    whiteScore: number;
+    blackScore: number;
 }

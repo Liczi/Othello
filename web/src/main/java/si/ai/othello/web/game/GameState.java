@@ -1,7 +1,6 @@
 package si.ai.othello.web.game;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 import si.ai.othello.game.utils.Pointer;
 
 /**
@@ -9,11 +8,14 @@ import si.ai.othello.game.utils.Pointer;
  *         Created on 21.05.2017.
  */
 @Data
+@AllArgsConstructor
 public class GameState {
     @NonNull
     private Boolean[][] board;
     @NonNull
     private Pointer[] moves;
-    @NonNull
     private Player player;
+    private boolean isWinner;
+    private int whiteScore;
+    private int blackScore;
 }

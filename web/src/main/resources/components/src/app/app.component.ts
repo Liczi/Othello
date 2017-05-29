@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, enableProdMode} from '@angular/core';
 import {ApiService} from './api/api.service';
 import {Player} from "./util/Player";
 import {GameState} from "./util/GameState";
+import {isUndefined} from "util";
 
 @Component({
     selector: 'app-root',
@@ -11,16 +12,25 @@ import {GameState} from "./util/GameState";
 export class AppComponent {
     title = 'app works!';
     gameState: GameState;
-    //todo test boolean[][] table
+    players: Player[];
+    winner: Player = null;
+    gameStarted = false;
+
+    whiteScore;
+    blackScore;
 
     constructor(private apiService: ApiService) {
     }
 
     ngOnInit() {
-        this.loadTitle();
-        this.startNewGame();
+        this.players = [new Player('', true), new Player('', false)];
     }
 
+    ngOnChanges() {
+        // this.resetCurrentScore();
+    }
+
+    //todo delete this
     loadTitle() {
         this.apiService.getTitle()
             .subscribe(title => this.title = title, err => {
@@ -28,15 +38,39 @@ export class AppComponent {
             });
     }
 
-    //todo start new game creates board component with proper GameState
-    //todo then the game is controled from board componenet
     //todo insert player names from input form
-    startNewGame() {
-        this.apiService.startNewGame(new Player("Zdziś", true), new Player("Miecio", false))
-            .subscribe(gameState => this.gameState = gameState, err => {
+    startNewGame(white: Player, black: Player) {
+        this.winner = null;
+        this.gameStarted = true;
+        this.apiService.startNewGame(white, black)
+            .subscribe(gameState => {
+                this.gameState = gameState;
+                this.boardChangedEvent(gameState);
+            }, err => {
                 console.log(err)
             });
     }
 
+    gameEndedEvent(winner) {
+        //todo implement gameEnd actions
+        this.winner = winner;
+        this.gameStarted = false;
+    }
 
+    playersChangedEvent(players) {
+        this.players = players;
+        this.startNewGame(players[0], players[1]);
+    }
+
+    boardChangedEvent(gameState) {
+        this.whiteScore = gameState.whiteScore;
+        this.blackScore = gameState.blackScore;
+    }
+
+    getWinnerName() {
+        if (this.winner != null)
+            return this.winner.name;
+        else
+            return '';
+    }
 }

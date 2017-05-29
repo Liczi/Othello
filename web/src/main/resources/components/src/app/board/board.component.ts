@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ApiService} from "../api/api.service";
 import {Pointer} from "../util/Pointer";
 import {Player} from "../util/Player";
@@ -14,8 +14,8 @@ export class BoardComponent implements OnInit {
 
     @Input() gameState: GameState;
     board: Boolean[][];
-    // availableMoves: Pointer[];
-    // currentPlayer: Player;
+    @Output() gameEndedEvent: EventEmitter<Player> = new EventEmitter();
+    @Output() boardChangedEvent: EventEmitter<GameState> = new EventEmitter();
 
     constructor(private apiService: ApiService) {
     }
@@ -62,5 +62,11 @@ export class BoardComponent implements OnInit {
     gameStateChangeEvent(gameState: GameState) {
         this.gameState = gameState;
         this.board = gameState.board;
+        this.boardChangedEvent.emit(gameState);
+
+        //emit game ended event with winner object
+        if (gameState.isWinner) {
+            this.gameEndedEvent.emit(gameState.player);
+        }
     }
 }

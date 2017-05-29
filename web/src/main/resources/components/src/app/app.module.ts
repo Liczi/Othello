@@ -8,6 +8,7 @@ import {ApiService} from './api/api.service';
 import {BoardComponent} from './board/board.component';
 import { ConeComponent } from './cone/cone.component';
 import { AvailableMoveDirective } from './directives/available-move.directive';
+import { PlayerInputComponent } from './player-input/player-input.component';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { AvailableMoveDirective } from './directives/available-move.directive';
         BoardComponent,
         ConeComponent,
         AvailableMoveDirective,
+        PlayerInputComponent,
     ],
     imports: [
         BrowserModule,
