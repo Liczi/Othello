@@ -24,7 +24,9 @@ public class Application {
     public static final String ACCEPT_TYPE_JSON = "application/json";
 
     public static void main(String[] args) {
+
         initializeServices();
+        staticFileLocation("/components/dist");
 
         enableCORS("http://localhost:4200", "ALL", "ALL");
 
