@@ -20,13 +20,11 @@ import static si.ai.othello.game.Game.WHITE;
 public class Board {
     public static final int BOARD_SIZE = 8;
 
-    private Game game;
     private Boolean[][] board;
     private int currentWhite;
     private int currentBlack;
 
-    public Board(Game game) {
-        this.game = game;
+    public Board() {
         board = new Boolean[BOARD_SIZE][BOARD_SIZE];
         setInitialCones();
     }
@@ -55,10 +53,13 @@ public class Board {
         return streamBuilder.build()
                 .map(ptr -> getNeighbours(ptr, true))
                 .flatMap(Stream::distinct)
+                .distinct()
                 .filter(pointer -> hasCaptureMove(pointer, color))
                 .toArray(Pointer[]::new);
     }
 
+
+    //todo test without this filter
     //we dont check if there is null on current position nor if has neighbouring opposite color
     private boolean hasCaptureMove(Pointer pointer, boolean color) {
 
@@ -164,7 +165,15 @@ public class Board {
 
     //todo test this method
     public Boolean[][] cloneBoard() {
-        return Arrays.copyOf(board, board.length);
+        Boolean[][] newBoard = new Boolean[board.length][board.length];
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                newBoard[i][j] = board[i][j];
+
+            }
+        }
+        return newBoard;
     }
 
     public Boolean[][] getBoard() {
@@ -188,8 +197,8 @@ public class Board {
     }
 
     //todo test
-    public boolean isEndOfGame() {
-        return currentWhite + currentBlack >= (Math.pow(BOARD_SIZE,2)) || (getAvailableMoves(game.getCurrentColor()).length <= 0);
+    public boolean isEndOfGame(boolean currentColor) {
+        return currentWhite + currentBlack >= (Math.pow(BOARD_SIZE, 2)) || (getAvailableMoves(currentColor).length <= 0);
     }
 
     private void setInitialCones() {

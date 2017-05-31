@@ -1,8 +1,7 @@
 package si.ai.othello.game;
 
 
-import si.ai.othello.game.utils.io.Display;
-import si.ai.othello.game.utils.io.player.IPlayer;
+import si.ai.othello.game.player.IPlayer;
 
 /**
  * @author Jakub Licznerski
@@ -22,7 +21,7 @@ public class Game {
         this.white = white;
         this.black = black;
        //this.display = display;
-        this.board = new Board(this);
+        this.board = new Board();
     }
 
     /**
@@ -47,7 +46,7 @@ public class Game {
     public IPlayer setNextPlayer() {
         //change current player
         setCurrentAsOpponent();
-        if (board.isEndOfGame()) {
+        if (board.isEndOfGame(getCurrentColor())) {
             setCurrentAsOpponent();
             return null;
         } else
@@ -75,5 +74,17 @@ public class Game {
         } else {
             currentPlayer = white;
         }
+    }
+
+    public IPlayer testStartGame(boolean isWhiteStarting) {
+        currentPlayer = isWhiteStarting ? white : black;
+
+        do {
+            board.moveAt(currentPlayer.nextMove(board), getCurrentColor()); //todo it could return null or throw exception when no moves can be done
+            board.updateCones();
+            // display.updateBoard(board.getBoard());
+        } while (setNextPlayer() != null);
+
+        return currentPlayer;
     }
 }

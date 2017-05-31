@@ -4,10 +4,7 @@ import si.ai.othello.game.Game;
 import si.ai.othello.game.utils.Pointer;
 import si.ai.othello.game.utils.io.ConsoleDisplay;
 import si.ai.othello.game.utils.io.Display;
-import si.ai.othello.game.utils.io.player.Human;
-
-import static si.ai.othello.game.Game.WHITE;
-import static si.ai.othello.web.Application.BOARD_SERVICE;
+import si.ai.othello.game.player.Human;
 
 /**
  * @author Jakub Licznerski

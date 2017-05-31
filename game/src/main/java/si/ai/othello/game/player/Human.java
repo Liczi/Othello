@@ -1,6 +1,7 @@
-package si.ai.othello.game.utils.io.player;
+package si.ai.othello.game.player;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import si.ai.othello.game.Board;
+import si.ai.othello.game.utils.Pointer;
 
 /**
  * @author Jakub Licznerski
@@ -27,7 +28,7 @@ public class Human implements IPlayer {
     }
 
     @Override
-    public void nextMove() {
-        throw new NotImplementedException();
+    public Pointer nextMove(Board board) {
+        throw new UnsupportedOperationException();
     }
 }
