@@ -26,16 +26,13 @@ public class Application {
     public static void main(String[] args) {
 
         initializeServices();
-        staticFileLocation("/components/dist");
+        //staticFileLocation("/components/dist");
 
-        enableCORS("http://localhost:4200", "ALL", "ALL");
+        enableCORS("*", "ALL", "ALL");
 
-        final Boolean[] tab = {true, false};
-//        get("/test", (req, res) -> new TestToJson(1, "string", true, tab), json());
         get("/board", BoardController.getBoard(), json());
         get("/game", GameController.getGameState(), json());
         get("/new", ACCEPT_TYPE_JSON, GameController.newGame(), json());
-//        get("new", "application/json", (request, response) -> request.queryParams("param1"));
         get("/move", ACCEPT_TYPE_JSON, GameController.move(), json());
         get("/title", (req, res) -> "Reversi", json());
         get("/player_types", (request, response) ->  PlayerType.values(), json());
