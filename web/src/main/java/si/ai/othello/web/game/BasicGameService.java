@@ -1,16 +1,21 @@
 package si.ai.othello.web.game;
 
 import si.ai.othello.game.Game;
+import si.ai.othello.game.heuristics.BasicTestHeuristic;
+import si.ai.othello.game.heuristics.EvaluationHeuristic;
 import si.ai.othello.game.utils.Pointer;
 import si.ai.othello.game.utils.io.ConsoleDisplay;
 import si.ai.othello.game.utils.io.Display;
-import si.ai.othello.game.player.Human;
+import si.ai.othello.web.game.player.Player;
+
+import static si.ai.othello.game.player.PlayerType.HUMAN;
+import static si.ai.othello.web.Application.PLAYER_FACTORY;
 
 /**
  * @author Jakub Licznerski
  *         Created on 21.05.2017.
  */
-public class MockGameService implements GameService {
+public class BasicGameService implements GameService {
 
     private Game game;
 
@@ -22,10 +27,13 @@ public class MockGameService implements GameService {
 
     @Override
     public GameState newGame(Player white, Player black) {
-        //todo add AI player handling
+
+        //todo customize it ?
+        EvaluationHeuristic heuristic = new BasicTestHeuristic();
+
         game = new Game(
-                new Human(white.getName(), white.isColor()),
-                new Human(black.getName(), black.isColor())
+                PLAYER_FACTORY.getIPlayer(white, heuristic),
+                PLAYER_FACTORY.getIPlayer(black, heuristic)
         );
         game.startGame(true);
 
@@ -41,7 +49,26 @@ public class MockGameService implements GameService {
         game.getBoard().updateCones();
         if (game.setNextPlayer() == null) {
             isWinner = true;
-        };
+        }
+
+        //todo delete
+        Display display = new ConsoleDisplay();
+        display.updateBoard(game.getBoard().getBoard());
+
+        return getCurrentGameState(isWinner);
+    }
+
+    @Override
+    public GameState moveAI() {
+        boolean isWinner = false;
+
+        //AI move
+        Pointer nextMove = game.getCurrentPlayer().nextMove(game.getBoard());
+        game.getBoard().moveAt(nextMove, game.getCurrentColor());
+        game.getBoard().updateCones();
+        if (game.setNextPlayer() == null) {
+            isWinner = true;
+        }
 
         //todo delete
         Display display = new ConsoleDisplay();
@@ -55,7 +82,7 @@ public class MockGameService implements GameService {
 
         return new GameState(
                 game.getBoard().getBoard(),
-                game.getBoard().getAvailableMoves(current.isColor()),
+                current.getType() == HUMAN ? game.getBoard().getAvailableMoves(current.isColor()) : new Pointer[0],
                 current,
                 isWinner,
                 game.getBoard().getCurrentWhite(),

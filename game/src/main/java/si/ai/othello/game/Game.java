@@ -47,7 +47,18 @@ public class Game {
         //change current player
         setCurrentAsOpponent();
         if (board.isEndOfGame(getCurrentColor())) {
-            setCurrentAsOpponent();
+            if (board.getCurrentBlack() + board.getCurrentWhite() >= 64) {
+                if (board.getCurrentWhite() == board.getCurrentBlack())
+                    throw new UnsupportedOperationException();
+                else if (board.getCurrentWhite() > board.getCurrentBlack()) {
+                    currentPlayer = white;
+                }
+                else
+                    currentPlayer = black;
+            }
+            else {
+                setCurrentAsOpponent();
+            }
             return null;
         } else
             return currentPlayer;

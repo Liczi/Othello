@@ -28,6 +28,11 @@ public class Human implements IPlayer {
     }
 
     @Override
+    public PlayerType getPlayerType() {
+        return PlayerType.HUMAN;
+    }
+
+    @Override
     public Pointer nextMove(Board board) {
         throw new UnsupportedOperationException();
     }

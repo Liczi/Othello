@@ -1,18 +1,22 @@
 <app-player-input (playersChangeEmitter)="playersChangedEvent($event)"></app-player-input>
 
 <div class="top-spacer">
-    <div [hidden]="winner == null || gameStarted">
-        <p class="big-winner-text">{{'Zwyciężył ' + getWinnerName() + '!!!'}}</p>
-    </div>
 
-    <div style="margin-right: 30px" [hidden]="!gameStarted">
+    <!--&lt;!&ndash;winner text&ndash;&gt;-->
+    <!--<div class="full-width" [hidden]="winner == null">-->
+        <!--<p class="big-winner-text">{{'Zwyciężył ' + getWinnerName() + '!!!'}}</p>-->
+        <!--<br>-->
+    <!--</div>-->
+
+    <!--score white-->
+    <div #whiteText style="margin-right: 30px" [hidden]="!gameStarted">
         <span class="big-player-text">{{players[0].name}}</span> <br>
         <span class="score-text">{{whiteScore}}</span>
         <img src="../assets/img/white_cone.png" class="big-cone-icon"/>
-
     </div>
 
-    <div style="margin-left: 30px" [hidden]="!gameStarted">
+    <!--score black-->
+    <div #blackText style="margin-left: 30px" [hidden]="!gameStarted">
         <span class="big-player-text">{{players[1].name}}</span> <br>
         <span class="score-text">{{blackScore}}</span>
         <img src="../assets/img/black_cone.png" class="big-cone-icon"/>
@@ -20,9 +24,10 @@
 
 </div>
 <div class="wrapper">
+    <!--board-->
     <div class="centered_box board">
         <app-board [gameState]="gameState" (gameEndedEvent)="gameEndedEvent($event)"
-                   (boardChangedEvent)="boardChangedEvent($event)" [hidden]="!gameStarted"></app-board>
+                   (boardChangedEvent)="boardChangedEvent($event)"></app-board>
     </div>
 </div>
 

@@ -26,15 +26,15 @@ public class MinMaxAi implements IPlayer {
     private EvaluationHeuristic heuristic;
 
     //todo delete
-    private Display display;
+    //private Display display;
 
-    public MinMaxAi(String name, boolean color, int maxTreeDepth, EvaluationHeuristic heuristic, Display display) {
+    public MinMaxAi(String name, boolean color, int maxTreeDepth, EvaluationHeuristic heuristic) {
         this.name = name;
         this.color = color;
         this.maxTreeDepth = maxTreeDepth;
         this.heuristic = heuristic;
 
-        this.display = display;
+//        this.display = display;
     }
 
     @Override
@@ -48,9 +48,14 @@ public class MinMaxAi implements IPlayer {
     }
 
     @Override
+    public PlayerType getPlayerType() {
+        return PlayerType.MIN_MAX;
+    }
+
+    @Override
     public Pointer nextMove(Board board) {
-        System.out.println("in nextMove, currentColor: " + color);
-        display.updateBoard(board.getBoard());
+//        System.out.println("in nextMove, currentColor: " + color);
+//        display.updateBoard(board.getBoard());
 
         long now = System.currentTimeMillis();
 

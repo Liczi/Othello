@@ -17,12 +17,13 @@ export class BoardComponent implements OnInit {
     @Output() gameEndedEvent: EventEmitter<Player> = new EventEmitter();
     @Output() boardChangedEvent: EventEmitter<GameState> = new EventEmitter();
 
+
+    test: boolean = false;
+
     constructor(private apiService: ApiService) {
     }
 
     ngOnInit() {
-        // this.loadBoard();
-        //this.loadGameState();
     }
 
     ngOnChanges() {
@@ -38,15 +39,11 @@ export class BoardComponent implements OnInit {
             });
     }
 
-    // loadBoard() {
-    //     this.apiService.getBoard()
-    //         .subscribe(board => this.gameState.board = board, err => {
-    //             console.log(err)
-    //         });
-    // }
-
-    // rowCustomTrack(index: number, obj: any) {
-    //     return index;
+    // async gameLoop() {
+    //     while(isUndefined(this.gameState) || !this.gameState.isWinner) {
+    //         if (!isUndefined(this.gameState) && this.gameState.player.type != "HUMAN")
+    //             await this.apiService.moveAI(this.gameState).take(1).toPromise();
+    //     }
     // }
 
     isAvailableMove(col: number, row: number) {
@@ -59,14 +56,23 @@ export class BoardComponent implements OnInit {
         return false;
     }
 
+    //called when cone is set by player
     gameStateChangeEvent(gameState: GameState) {
         this.gameState = gameState;
         this.board = gameState.board;
-        this.boardChangedEvent.emit(gameState);
 
         //emit game ended event with winner object
         if (gameState.isWinner) {
-            this.gameEndedEvent.emit(gameState.player);
+            this.boardChangedEvent.emit(gameState);
+        }
+        if (gameState.player.type !== "HUMAN") {
+            //todo add opponent move here and update gameState
+            this.apiService.moveAI()
+                .subscribe(newGameState => this.gameStateChangeEvent(newGameState))
+            //todo add in server side: dont return movesAvailable when player is not human!
+        }
+        else {
+            this.boardChangedEvent.emit(gameState);
         }
     }
 }

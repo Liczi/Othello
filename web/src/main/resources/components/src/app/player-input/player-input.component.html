@@ -1,14 +1,28 @@
 <div class="top-menu">
     <!--<div class="centered_box"-->
     <span class="player-text">Gracz</span>
-    <img src="../../assets/img/white_cone.png" class="cone-icon" />
-    <br />
+    <img src="../../assets/img/white_cone.png" class="cone-icon"/>
+    <br/>
     <input class="input" [(ngModel)]="whiteName" placeholder="Nazwa1">
+    <select class="input" [(ngModel)]="whiteType">
+        <option *ngFor="let type of types"
+                [value]="type">
+            {{type}}
+        </option>
+    </select>
+    <br>
 
     <span class="player-text">Gracz</span>
-    <img src="../../assets/img/black_cone.png" class="cone-icon" />
-    <br />
+    <img src="../../assets/img/black_cone.png" class="cone-icon"/>
+    <br/>
     <input class="input" [(ngModel)]="blackName" placeholder="Nazwa2">
+    <select class="input" [(ngModel)]="blackType">
+        <option *ngFor="let type of types"
+                [value]="type">
+            {{type}}
+        </option>
+    </select>
+    <br>
 
     <button (click)="startGame()" class="game-button">ROZPOCZNIJ</button>
 </div>

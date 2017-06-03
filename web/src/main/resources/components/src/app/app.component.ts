@@ -1,4 +1,4 @@
-import {Component, enableProdMode} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ApiService} from './api/api.service';
 import {Player} from "./util/Player";
 import {GameState} from "./util/GameState";
@@ -19,11 +19,14 @@ export class AppComponent {
     whiteScore;
     blackScore;
 
+    @ViewChild('whiteText') whiteText: ElementRef;
+    @ViewChild('blackText') blackText: ElementRef;
+
     constructor(private apiService: ApiService) {
     }
 
     ngOnInit() {
-        this.players = [new Player('', true), new Player('', false)];
+        this.players = [new Player('', true, "HUMAN"), new Player('', false, "HUMAN")];
     }
 
     ngOnChanges() {
@@ -42,19 +45,26 @@ export class AppComponent {
     startNewGame(white: Player, black: Player) {
         this.winner = null;
         this.gameStarted = true;
+        this.resetStyles();
         this.apiService.startNewGame(white, black)
             .subscribe(gameState => {
-                this.gameState = gameState;
                 this.boardChangedEvent(gameState);
             }, err => {
                 console.log(err)
             });
     }
 
-    gameEndedEvent(winner) {
+    gameEndedEvent(winner: Player) {
         //todo implement gameEnd actions
+        if (winner.color) {
+            this.whiteText.nativeElement.style.backgroundColor = "green";
+        }
+        else {
+            this.blackText.nativeElement.style.backgroundColor = "green";
+        }
+
         this.winner = winner;
-        this.gameStarted = false;
+        //this.gameStarted = false;
     }
 
     playersChangedEvent(players) {
@@ -62,15 +72,22 @@ export class AppComponent {
         this.startNewGame(players[0], players[1]);
     }
 
-    boardChangedEvent(gameState) {
+    boardChangedEvent(gameState: GameState) {
+        this.gameState = gameState;
         this.whiteScore = gameState.whiteScore;
         this.blackScore = gameState.blackScore;
+
+        if (gameState.isWinner) {
+            this.gameEndedEvent(gameState.player);
+        }
+        else if (gameState.player.type !== 'HUMAN') {
+            this.apiService.moveAI()
+                .subscribe(gameState => this.boardChangedEvent(gameState))
+        }
     }
 
-    getWinnerName() {
-        if (this.winner != null)
-            return this.winner.name;
-        else
-            return '';
+    resetStyles() {
+        this.whiteText.nativeElement.style.backgroundColor = "rgba(255, 255, 255, 0)";
+        this.blackText.nativeElement.style.backgroundColor = "rgba(255, 255, 255, 0)";
     }
 }

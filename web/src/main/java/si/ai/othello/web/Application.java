@@ -1,12 +1,13 @@
 package si.ai.othello.web;
 
-import si.ai.othello.game.Game;
 import si.ai.othello.web.board.BoardController;
 import si.ai.othello.web.board.BoardService;
 import si.ai.othello.web.board.MockBoardService;
 import si.ai.othello.web.game.GameController;
 import si.ai.othello.web.game.GameService;
-import si.ai.othello.web.game.MockGameService;
+import si.ai.othello.web.game.BasicGameService;
+import si.ai.othello.game.player.PlayerType;
+import si.ai.othello.web.game.player.PlayerFactory;
 
 import static si.ai.othello.web.util.JsonUtil.json;
 import static spark.Spark.*;
@@ -18,6 +19,7 @@ import static spark.Spark.*;
 public class Application {
     public static BoardService BOARD_SERVICE;
     public static GameService GAME_SERVICE;
+    public static PlayerFactory PLAYER_FACTORY;
 
     public static final String ACCEPT_TYPE_JSON = "application/json";
 
@@ -36,11 +38,14 @@ public class Application {
 //        get("new", "application/json", (request, response) -> request.queryParams("param1"));
         get("/move", ACCEPT_TYPE_JSON, GameController.move(), json());
         get("/title", (req, res) -> "Reversi", json());
+        get("/player_types", (request, response) ->  PlayerType.values(), json());
+        get("moveAI", GameController.moveAI(), json());
     }
 
     private static void initializeServices() {
         BOARD_SERVICE = new MockBoardService();
-        GAME_SERVICE = new MockGameService();
+        GAME_SERVICE = new BasicGameService();
+        PLAYER_FACTORY = new PlayerFactory();
     }
 
     private static void enableCORS(final String origin, final String methods, final String headers) {

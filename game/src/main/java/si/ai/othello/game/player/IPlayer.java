@@ -11,5 +11,6 @@ public interface IPlayer {
 
     String getName();
     boolean getColor();
+    PlayerType getPlayerType();
     Pointer nextMove(Board board);
 }

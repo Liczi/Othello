@@ -37,6 +37,8 @@ export class ApiService {
         let params: URLSearchParams = new URLSearchParams();
         params.set('whiteName', white.name);
         params.set('blackName', black.name);
+        params.set('whiteType', white.type);
+        params.set('blackType', black.type);
 
         return this.http.get(AppSettings.API_ENDPOINT + 'new', {
             // headers: this.getAcceptJsonHeader(),
@@ -53,6 +55,16 @@ export class ApiService {
             .map(res => res.json());
     }
 
+    moveAI(): Observable<GameState> {
+        return this.http.get(AppSettings.API_ENDPOINT + "moveAI")
+            .map(res => res.json());
+    }
+
+    getPlayerTypes(): Observable<string[]> {
+        return this.http.get(AppSettings.API_ENDPOINT + "player_types")
+            .map(res => res.json());
+    }
+
     objToSearchParams(obj): URLSearchParams {
         let params: URLSearchParams = new URLSearchParams();
         for (let key in obj) {
@@ -61,6 +73,8 @@ export class ApiService {
         }
         return params;
     }
+
+
 
     // getAcceptJsonHeader(): Headers {
     //     let headers = new Headers();

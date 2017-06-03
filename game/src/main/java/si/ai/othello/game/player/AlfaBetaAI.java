@@ -19,6 +19,11 @@ public class AlfaBetaAI implements IPlayer {
     }
 
     @Override
+    public PlayerType getPlayerType() {
+        return PlayerType.ALFA_BETA;
+    }
+
+    @Override
     public Pointer nextMove(Board board) {
         return null;
     }

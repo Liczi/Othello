@@ -20,8 +20,8 @@ public class Main {
         EvaluationHeuristic heuristic = new BasicTestHeuristic();
         Display display = new ConsoleDisplay();
         Game game = new Game(
-                new MinMaxAi("Minmax1", WHITE, 4, heuristic, display),
-                new MinMaxAi("Minmax2", BLACK, 2, heuristic, display)
+                new MinMaxAi("Minmax1", WHITE, 4, heuristic),
+                new MinMaxAi("Minmax2", BLACK, 2, heuristic)
         );
 
         IPlayer winner = game.testStartGame(true);

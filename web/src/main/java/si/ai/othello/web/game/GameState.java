@@ -2,6 +2,7 @@ package si.ai.othello.web.game;
 
 import lombok.*;
 import si.ai.othello.game.utils.Pointer;
+import si.ai.othello.web.game.player.Player;
 
 /**
  * @author Jakub Licznerski
