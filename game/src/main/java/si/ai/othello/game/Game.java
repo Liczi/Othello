@@ -2,6 +2,8 @@ package si.ai.othello.game;
 
 
 import si.ai.othello.game.player.IPlayer;
+import si.ai.othello.game.utils.io.ConsoleDisplay;
+import si.ai.othello.game.utils.io.Display;
 
 /**
  * @author Jakub Licznerski
@@ -16,12 +18,14 @@ public class Game {
     private Board board; // [col][row]
 
     private IPlayer currentPlayer;
+    private Display display;
 
     public Game(IPlayer white, IPlayer black) {
         this.white = white;
         this.black = black;
-       //this.display = display;
+
         this.board = new Board();
+        this.display = new ConsoleDisplay();
     }
 
     /**
@@ -33,13 +37,6 @@ public class Game {
     public IPlayer startGame(boolean isWhiteStarting) {
         currentPlayer = isWhiteStarting ? white : black;
         return currentPlayer;
-//        do {
-//            currentPlayer.nextMove(); //todo it could return null or throw exception when no moves can be done
-//            board.updateCones();
-//           // display.updateBoard(board.getBoard());
-//        } while (setNextPlayer() != null);
-//
-//        return currentPlayer;
     }
 
     //todo implement EndOfGame as an application event or exception
@@ -52,11 +49,9 @@ public class Game {
                     throw new UnsupportedOperationException();
                 else if (board.getCurrentWhite() > board.getCurrentBlack()) {
                     currentPlayer = white;
-                }
-                else
+                } else
                     currentPlayer = black;
-            }
-            else {
+            } else {
                 setCurrentAsOpponent();
             }
             return null;
@@ -89,11 +84,17 @@ public class Game {
 
     public IPlayer testStartGame(boolean isWhiteStarting) {
         currentPlayer = isWhiteStarting ? white : black;
-
+        //show initial state
+        display.updateBoard(getBoard().getBoard());
+        System.out.println();
         do {
-            board.moveAt(currentPlayer.nextMove(board), getCurrentColor()); //todo it could return null or throw exception when no moves can be done
+            long now = System.currentTimeMillis();
+            System.out.printf("%s's turn", currentPlayer.getColor() ? "white" : "black");
+            board.moveAt(currentPlayer.nextMove(board), getCurrentColor());
+            long time = System.currentTimeMillis() - now;
             board.updateCones();
-            // display.updateBoard(board.getBoard());
+            display.updateBoard(board.getBoard());
+            System.out.printf("Computed in %fs\n\n", time / 1000d);
         } while (setNextPlayer() != null);
 
         return currentPlayer;

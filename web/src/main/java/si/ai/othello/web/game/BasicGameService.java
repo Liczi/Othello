@@ -18,6 +18,7 @@ import static si.ai.othello.web.Application.PLAYER_FACTORY;
 public class BasicGameService implements GameService {
 
     private Game game;
+    private Display display = new ConsoleDisplay();
 
     //todo check if needed
     @Override
@@ -51,9 +52,9 @@ public class BasicGameService implements GameService {
             isWinner = true;
         }
 
-        //todo delete
-        Display display = new ConsoleDisplay();
+        //loggin movement
         display.updateBoard(game.getBoard().getBoard());
+        System.out.println();
 
         return getCurrentGameState(isWinner);
     }
@@ -62,17 +63,20 @@ public class BasicGameService implements GameService {
     public GameState moveAI() {
         boolean isWinner = false;
 
+        long now = System.currentTimeMillis();
         //AI move
         Pointer nextMove = game.getCurrentPlayer().nextMove(game.getBoard());
+        long time = System.currentTimeMillis() - now;
+
         game.getBoard().moveAt(nextMove, game.getCurrentColor());
         game.getBoard().updateCones();
         if (game.setNextPlayer() == null) {
             isWinner = true;
         }
 
-        //todo delete
-        Display display = new ConsoleDisplay();
+        //logging AI movement and computing time
         display.updateBoard(game.getBoard().getBoard());
+        System.out.printf("Computed in %fs", time/1000f);
 
         return getCurrentGameState(isWinner);
     }

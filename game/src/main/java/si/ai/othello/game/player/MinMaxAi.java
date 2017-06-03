@@ -25,16 +25,11 @@ public class MinMaxAi implements IPlayer {
     private int maxTreeDepth;
     private EvaluationHeuristic heuristic;
 
-    //todo delete
-    //private Display display;
-
     public MinMaxAi(String name, boolean color, int maxTreeDepth, EvaluationHeuristic heuristic) {
         this.name = name;
         this.color = color;
         this.maxTreeDepth = maxTreeDepth;
         this.heuristic = heuristic;
-
-//        this.display = display;
     }
 
     @Override
@@ -54,25 +49,9 @@ public class MinMaxAi implements IPlayer {
 
     @Override
     public Pointer nextMove(Board board) {
-//        System.out.println("in nextMove, currentColor: " + color);
-//        display.updateBoard(board.getBoard());
-
-        long now = System.currentTimeMillis();
-
-
         Pointer[] availableMoves = board.getAvailableMoves(this.color);
         Pointer result = null;
 
-
-//        double[] values = Arrays.stream(availableMoves)
-//                .mapToDouble(move -> evaluateNode(
-//                        moveAt(board.cloneBoard(), move, this.color),
-//                        this.color,
-//                        1
-//                ))
-//                .toArray();
-
-        //todo check availableMoves (why shit)
         //recursion
         double[] values = new double[availableMoves.length];
         for (int i = 0; i < availableMoves.length; i++) {
@@ -90,17 +69,10 @@ public class MinMaxAi implements IPlayer {
                 result = availableMoves[i];
             }
         }
-
-        System.out.println("computed in: " + (System.currentTimeMillis() - now)/1000f + "s\n\n");
-
         return result;
     }
 
     private double evaluateNode(Boolean[][] currentBoard, boolean currentColor, int currentDepth) {
-        //todo delete
-//        System.out.println("in evaluateNode, currentColor: " + currentColor + " level " + currentDepth);
-//        display.updateBoard(currentBoard);
-
         if (currentDepth >= maxTreeDepth) {
             return heuristic.evaluate(currentBoard, this.color);
         }
