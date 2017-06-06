@@ -73,6 +73,7 @@ public class MinMaxAi implements IPlayer {
     }
 
     private double evaluateNode(Boolean[][] currentBoard, boolean currentColor, int currentDepth) {
+        //todo evaluate heuristics for the currentColor?
         if (currentDepth >= maxTreeDepth) {
             return heuristic.evaluate(currentBoard, this.color);
         }
@@ -80,11 +81,15 @@ public class MinMaxAi implements IPlayer {
 
         List<Pointer> moves = getAvailableMoves(currentBoard, currentColor)
                 .collect(Collectors.toList());
+
+        //todo use currentColor (we or the opponent win)
         //if no moves -> its a leaf
         if (moves.size() <= 0) {
-            if (isNoEmptyConeLeft(currentBoard)) //-> game won
-                return Integer.MAX_VALUE;
-            return Integer.MIN_VALUE + 1; //game lost
+            if (isNoEmptyConeLeft(currentBoard)) //-> game ended
+                return heuristic.evaluate(currentBoard, this.color);
+            //no more moves for the player (not full board)
+            //so if its our turn, we lost, if the opponent, we won
+            return currentColor == this.color ? Integer.MIN_VALUE + 1 : Integer.MAX_VALUE - 1;
         }
 
         //todo performance improvement: dont store it in array, evaluate in double[2] or on the run

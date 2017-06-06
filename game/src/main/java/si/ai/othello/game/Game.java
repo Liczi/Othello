@@ -85,6 +85,7 @@ public class Game {
     public IPlayer testStartGame(boolean isWhiteStarting) {
         currentPlayer = isWhiteStarting ? white : black;
         //show initial state
+        //System.out.printf("%s's turn", isWhiteStarting ? "white" : "black"); //todo vulnerable for isWhiteStarting variable change
         display.updateBoard(getBoard().getBoard());
         System.out.println();
         do {

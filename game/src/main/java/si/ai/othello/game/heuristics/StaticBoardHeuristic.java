@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 
 //todo refactor or delete
-public class BasicTestHeuristic implements EvaluationHeuristic {
+public class StaticBoardHeuristic implements EvaluationHeuristic {
 
     @Override
     public double evaluate(Boolean[][] board, boolean color) {

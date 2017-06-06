@@ -65,7 +65,7 @@ export class BoardComponent implements OnInit {
         if (gameState.isWinner) {
             this.boardChangedEvent.emit(gameState);
         }
-        if (gameState.player.type !== "HUMAN") {
+        else if (gameState.player.type !== "HUMAN") {
             //todo add opponent move here and update gameState
             this.apiService.moveAI()
                 .subscribe(newGameState => this.gameStateChangeEvent(newGameState))
