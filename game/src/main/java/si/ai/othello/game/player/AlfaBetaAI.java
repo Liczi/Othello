@@ -49,7 +49,7 @@ public class AlfaBetaAI implements IPlayer {
         Pointer[] moves = board.getAvailableMoves(this.color);
         double[] values = new double[moves.length];
         for (int i = 0; i < moves.length; i++) {
-            values[i] = maximize(
+            values[i] = minimize(
                     moveAt(board.cloneBoard(), moves[i], this.color),
                     !this.color,
                     1,
@@ -79,11 +79,7 @@ public class AlfaBetaAI implements IPlayer {
 
         //if no moves -> its a leaf
         if (moves.size() <= 0) {
-            if (isNoEmptyConeLeft(currentBoard)) //-> game ended
-                return heuristic.evaluate(currentBoard, this.color);
-            //no more moves for the player (not full board)
-            //so if its our turn, we lost, if the opponent, we won
-            return currentColor == this.color ? Integer.MIN_VALUE + 1 : Integer.MAX_VALUE - 1;
+            return heuristic.noAvailableMovesEvaluation(currentBoard, this.color, currentColor);
         }
 
         //initialize
@@ -121,11 +117,7 @@ public class AlfaBetaAI implements IPlayer {
 
         //if no moves -> its a leaf
         if (moves.size() <= 0) {
-            if (isNoEmptyConeLeft(currentBoard)) //-> game ended
-                return heuristic.evaluate(currentBoard, this.color);
-            //no more moves for the player (not full board)
-            //so if its our turn, we lost, if the opponent, we won
-            return currentColor == this.color ? Integer.MIN_VALUE + 1 : Integer.MAX_VALUE - 1;
+            return heuristic.noAvailableMovesEvaluation(currentBoard, this.color, currentColor);
         }
 
         //initialize

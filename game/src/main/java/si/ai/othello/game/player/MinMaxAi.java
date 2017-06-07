@@ -85,11 +85,7 @@ public class MinMaxAi implements IPlayer {
         //todo use currentColor (we or the opponent win)
         //if no moves -> its a leaf
         if (moves.size() <= 0) {
-            if (isNoEmptyConeLeft(currentBoard)) //-> game ended
-                return heuristic.evaluate(currentBoard, this.color);
-            //no more moves for the player (not full board)
-            //so if its our turn, we lost, if the opponent, we won
-            return currentColor == this.color ? Integer.MIN_VALUE + 1 : Integer.MAX_VALUE - 1;
+            return heuristic.noAvailableMovesEvaluation(currentBoard, this.color, currentColor);
         }
 
         //todo performance improvement: dont store it in array, evaluate in double[2] or on the run

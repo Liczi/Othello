@@ -7,4 +7,6 @@ package si.ai.othello.game.heuristics;
 public interface EvaluationHeuristic {
 
     double evaluate(Boolean[][] board, boolean color);
+
+    double noAvailableMovesEvaluation(Boolean[][] currentBoard, boolean playerColor, boolean currentColor);
 }

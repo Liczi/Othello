@@ -43,20 +43,31 @@ public class Game {
     public IPlayer setNextPlayer() {
         //change current player
         setCurrentAsOpponent();
-        if (board.isEndOfGame(getCurrentColor())) {
-            if (board.getCurrentBlack() + board.getCurrentWhite() >= 64) {
-                if (board.getCurrentWhite() == board.getCurrentBlack())
-                    throw new UnsupportedOperationException();
-                else if (board.getCurrentWhite() > board.getCurrentBlack()) {
-                    currentPlayer = white;
-                } else
-                    currentPlayer = black;
-            } else {
-                setCurrentAsOpponent();
-            }
+
+        if (board.isEndOfGame()) {
+            //todo draw implementation
+            if (board.getCurrentWhite() >= board.getCurrentBlack()) {
+                currentPlayer = white;
+            } else
+                currentPlayer = black;
+
             return null;
-        } else
+        }
+
+        if (board.getAvailableMoves(getCurrentColor()).length <= 0) {
+            if (board.getAvailableMoves(!getCurrentColor()).length <= 0) { //no more moves
+                //todo draw implementation
+                if (board.getCurrentWhite() >= board.getCurrentBlack())
+                    currentPlayer = white;
+                else
+                    currentPlayer = black;
+                return null;
+            }
+            setCurrentAsOpponent();
             return currentPlayer;
+        }
+
+        return currentPlayer;
     }
 
     public Board getBoard() {

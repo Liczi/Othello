@@ -197,8 +197,8 @@ public class Board {
     }
 
     //todo test
-    public boolean isEndOfGame(boolean currentColor) {
-        return currentWhite + currentBlack >= (Math.pow(BOARD_SIZE, 2)) || (getAvailableMoves(currentColor).length <= 0);
+    public boolean isEndOfGame() {
+        return currentWhite + currentBlack >= (Math.pow(BOARD_SIZE, 2));
     }
 
     private void setInitialCones() {

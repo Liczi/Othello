@@ -9,9 +9,6 @@ import si.ai.othello.game.utils.Pointer;
  */
 public class EvaluationUtil {
 
-    public static final double CORNERS_WEIGHT = 3.0;
-    public static final double NO_MOVES_PENALTY = -100;
-
     private static final int[][] staticMap = {
             {4, -3, 2, 2, 2, 2, -3, 4},
             {-3, -4, -1, -1, -1, -1, -4, -3},
@@ -28,7 +25,7 @@ public class EvaluationUtil {
 
     }
 
-    public static double evaluateCones(Boolean[][] board, boolean color) {
+    public static int countCones(Boolean[][] board, boolean color) {
         int current = 0;
         for (Boolean[] booleans : board) {
             for (Boolean aBoolean : booleans) {

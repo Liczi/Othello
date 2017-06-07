@@ -61,6 +61,7 @@ public class BasicGameService implements GameService {
 
     @Override
     public GameState moveAI() {
+        //todo add delay
         boolean isWinner = false;
 
         long now = System.currentTimeMillis();
@@ -76,7 +77,7 @@ public class BasicGameService implements GameService {
 
         //logging AI movement and computing time
         display.updateBoard(game.getBoard().getBoard());
-        System.out.printf("Computed in %fs", time/1000f);
+        System.out.printf("Computed in %fs\n", time/1000f);
 
         return getCurrentGameState(isWinner);
     }
