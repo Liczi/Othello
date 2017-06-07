@@ -5,6 +5,9 @@ import si.ai.othello.game.player.IPlayer;
 import si.ai.othello.game.utils.io.ConsoleDisplay;
 import si.ai.othello.game.utils.io.Display;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Jakub Licznerski
  *         Created on 10.05.2017.
@@ -20,12 +23,18 @@ public class Game {
     private IPlayer currentPlayer;
     private Display display;
 
+    private List<Long> whiteMovesTime;
+    private List<Long> blackMovesTime;
+
     public Game(IPlayer white, IPlayer black) {
         this.white = white;
         this.black = black;
 
         this.board = new Board();
         this.display = new ConsoleDisplay();
+
+        this.whiteMovesTime = new ArrayList<>();
+        this.blackMovesTime = new ArrayList<>();
     }
 
     /**
@@ -107,7 +116,19 @@ public class Game {
             board.updateCones();
             display.updateBoard(board.getBoard());
             System.out.printf("Computed in %fs\n\n", time / 1000d);
+
+            //times counting
+            if (currentPlayer == white)
+                whiteMovesTime.add(time);
+            else
+                blackMovesTime.add(time);
+
         } while (setNextPlayer() != null);
+
+        System.out.printf("\nMaximum white move time: %fs", whiteMovesTime.stream().max(Long::compare).get() / 1000f);
+        System.out.printf("\nMaximum black move time: %fs\n", blackMovesTime.stream().max(Long::compare).get() / 1000f);
+        System.out.printf("\nAverage white moves time: %fs", whiteMovesTime.stream().mapToInt(Long::intValue).average().getAsDouble() / 1000f);
+        System.out.printf("\nAverage black moves time: %fs\n", blackMovesTime.stream().mapToInt(Long::intValue).average().getAsDouble() / 1000f);
 
         return currentPlayer;
     }

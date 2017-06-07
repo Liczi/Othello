@@ -54,7 +54,7 @@ public class BasicGameService implements GameService {
             isWinner = true;
         }
 
-        //loggin movement
+        //logging movement
         display.updateBoard(game.getBoard().getBoard());
         System.out.println();
 

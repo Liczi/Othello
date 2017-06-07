@@ -18,21 +18,22 @@ import static si.ai.othello.game.Game.WHITE;
 public class Main {
 
     public static void main(String[] args) {
-        EvaluationHeuristic heuristic = new AdvStaticBoardHeuristic();
+        EvaluationHeuristic staticHeuristic = new StaticBoardHeuristic();
+        EvaluationHeuristic advStaticHeuristic = new AdvStaticBoardHeuristic();
         EvaluationHeuristic pmcsHeuristic = new PMCSHeuristic();
 
-        IPlayer minmaxW = new MinMaxAi("MinmaxW", WHITE, 5, heuristic);
-        IPlayer minmaxB = new MinMaxAi("MinmaxB", BLACK, 4, heuristic);
+        IPlayer minmaxW = new MinMaxAi("MinmaxW", WHITE, 6, staticHeuristic);
+        IPlayer minmaxB = new MinMaxAi("MinmaxB", BLACK, 6, staticHeuristic);
 
-        IPlayer alfabetaW = new AlfaBetaAI("AlfaBetaW", WHITE, 6, heuristic);
-        IPlayer alfabetaB = new AlfaBetaAI("AlfaBetaB", BLACK, 4, heuristic);
+        IPlayer alfabetaW = new AlfaBetaAI("AlfaBetaW", WHITE, 7, staticHeuristic);
+        IPlayer alfabetaB = new AlfaBetaAI("AlfaBetaB", BLACK, 7, staticHeuristic);
 
-        IPlayer newHeuristicW = new AlfaBetaAI("AlfaBeta+HeurW", WHITE, 4, pmcsHeuristic);
-        IPlayer newHeuristicB = new AlfaBetaAI("AlfaBeta+HeurB", BLACK, 6, pmcsHeuristic);
+        IPlayer newHeuristicW = new AlfaBetaAI("advStaticHeuristic", WHITE, 5, advStaticHeuristic);
+        IPlayer newHeuristicB = new AlfaBetaAI("static", BLACK, 5, staticHeuristic);
 
         Game game = new Game(
                 newHeuristicW,
-                alfabetaB
+                newHeuristicB
         );
 
 
