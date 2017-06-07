@@ -25,7 +25,7 @@ public class Main {
         IPlayer minmaxB = new MinMaxAi("MinmaxB", BLACK, 4, heuristic);
 
         IPlayer alfabetaW = new AlfaBetaAI("AlfaBetaW", WHITE, 6, heuristic);
-        IPlayer alfabetaB = new AlfaBetaAI("AlfaBetaB", BLACK, 6, heuristic);
+        IPlayer alfabetaB = new AlfaBetaAI("AlfaBetaB", BLACK, 4, heuristic);
 
         IPlayer newHeuristicW = new AlfaBetaAI("AlfaBeta+HeurW", WHITE, 4, pmcsHeuristic);
         IPlayer newHeuristicB = new AlfaBetaAI("AlfaBeta+HeurB", BLACK, 6, pmcsHeuristic);

@@ -77,9 +77,9 @@ public class AlfaBetaAI implements IPlayer {
         List<Pointer> moves = getAvailableMoves(currentBoard, currentColor)
                 .collect(Collectors.toList());
 
-        //if no moves -> its a leaf
+        //if no moves, the opponent moves
         if (moves.size() <= 0) {
-            return heuristic.noAvailableMovesEvaluation(currentBoard, this.color, currentColor);
+            return minimize(currentBoard, !currentColor, currentDepth + 1, alfa, beta);
         }
 
         //initialize
@@ -115,9 +115,9 @@ public class AlfaBetaAI implements IPlayer {
         List<Pointer> moves = getAvailableMoves(currentBoard, currentColor)
                 .collect(Collectors.toList());
 
-        //if no moves -> its a leaf
+        //if no moves, the opponent moves
         if (moves.size() <= 0) {
-            return heuristic.noAvailableMovesEvaluation(currentBoard, this.color, currentColor);
+            return maximize(currentBoard, !currentColor, currentDepth + 1, alfa, beta);
         }
 
         //initialize

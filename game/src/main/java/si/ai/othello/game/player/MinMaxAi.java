@@ -82,10 +82,9 @@ public class MinMaxAi implements IPlayer {
         List<Pointer> moves = getAvailableMoves(currentBoard, currentColor)
                 .collect(Collectors.toList());
 
-        //todo use currentColor (we or the opponent win)
-        //if no moves -> its a leaf
+        //if no moves, the opponent moves
         if (moves.size() <= 0) {
-            return heuristic.noAvailableMovesEvaluation(currentBoard, this.color, currentColor);
+            return evaluateNode(currentBoard, !currentColor, currentDepth + 1);
         }
 
         //todo performance improvement: dont store it in array, evaluate in double[2] or on the run
