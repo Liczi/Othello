@@ -15,7 +15,7 @@ public class PlayerFactory {
         switch (type) {
             case HUMAN: return new Human(player.getName(), player.isColor());
             case MIN_MAX: return new MinMaxAi(player.getName(), player.isColor(), 4, heuristic);
-            case ALFA_BETA: return new AlfaBetaAI(player.getName(), player.isColor(), 6, heuristic);
+            case ALFA_BETA: return new AlfaBetaAI(player.getName(), player.isColor(), 5, heuristic);
             default: return null;
         }
     }

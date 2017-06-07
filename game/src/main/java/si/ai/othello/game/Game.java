@@ -46,7 +46,7 @@ public class Game {
 
         if (board.isEndOfGame()) {
             //todo draw implementation
-            if (board.getCurrentWhite() >= board.getCurrentBlack()) {
+            if (board.getCurrentWhite() > board.getCurrentBlack()) {
                 currentPlayer = white;
             } else
                 currentPlayer = black;
@@ -57,7 +57,7 @@ public class Game {
         if (board.getAvailableMoves(getCurrentColor()).length <= 0) {
             if (board.getAvailableMoves(!getCurrentColor()).length <= 0) { //no more moves
                 //todo draw implementation
-                if (board.getCurrentWhite() >= board.getCurrentBlack())
+                if (board.getCurrentWhite() > board.getCurrentBlack())
                     currentPlayer = white;
                 else
                     currentPlayer = black;

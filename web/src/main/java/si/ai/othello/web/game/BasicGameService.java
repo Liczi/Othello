@@ -1,6 +1,7 @@
 package si.ai.othello.web.game;
 
 import si.ai.othello.game.Game;
+import si.ai.othello.game.heuristics.PMCSHeuristic;
 import si.ai.othello.game.heuristics.StaticBoardHeuristic;
 import si.ai.othello.game.heuristics.EvaluationHeuristic;
 import si.ai.othello.game.utils.Pointer;
@@ -31,10 +32,11 @@ public class BasicGameService implements GameService {
 
         //todo customize it ?
         EvaluationHeuristic heuristic = new StaticBoardHeuristic();
+        EvaluationHeuristic newHeuristic = new PMCSHeuristic();
 
         game = new Game(
-                PLAYER_FACTORY.getIPlayer(white, heuristic),
-                PLAYER_FACTORY.getIPlayer(black, heuristic)
+                PLAYER_FACTORY.getIPlayer(white, newHeuristic),
+                PLAYER_FACTORY.getIPlayer(black, newHeuristic)
         );
         game.startGame(true);
 
